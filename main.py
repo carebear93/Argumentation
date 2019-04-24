@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
 import networkx as nx
-import matlab as ml
 
 # Type of Argument
 argument = ["in", "out", "undec"]
@@ -18,6 +17,7 @@ def check_arugment(af,argument):
         else:
             return "undec"
 
+# Create sets from Graph!
 def powerset( base_set ):
     """ modified from pydoc’s itertools recipe"""
     from itertools import chain, combinations
@@ -29,7 +29,6 @@ def powerset( base_set ):
         list_of_frozensets = list( map( frozenset, map( list, ll ) ) )
         set_of_frozensets = set( list_of_frozensets )
         powerset = powerset.union( set_of_frozensets )
-
     return powerset
 
 def generateLabellings(args):
@@ -37,9 +36,13 @@ def generateLabellings(args):
     for ina in powerset(args):
             for outa in powerset(args-ina):
                 output.append([ina,outa,(args-ina)-outa])
+    # Output = In, Out, Undecided
     return output
 
+# Networkx produce Graph
 G = nx.Graph()
-G.add_nodes_from([2, 3])
-
-print (powerset(G.nodes))
+# Networkx add nodes
+G.add_nodes_from([1, 2, 3, 4, 5, 6])
+G.add_edges_from([(1, 2), (3, 4), (5, 6)])
+for x in (generateLabellings(G.nodes)):
+    print(x)
